@@ -9,8 +9,9 @@ import { defineMessages } from 'react-intl';
 export const scope = 'app.components.Callout';
 
 export default defineMessages({
-  header: {
-    id: `${scope}.header`,
-    defaultMessage: 'This is the Callout component!',
+  description: {
+    id: `${scope}.description`,
+    defaultMessage:
+      'You have not entered your login. Please enter your employee login in the Login field',
   },
 });

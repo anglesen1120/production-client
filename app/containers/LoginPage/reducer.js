@@ -18,7 +18,10 @@ import {
 export const initialState = {
   login: '',
   password: '',
-  error: '',
+  error: {
+    title: '',
+    description: '',
+  },
   isMaster: false,
   isLoading: false,
   isShowPassword: false,

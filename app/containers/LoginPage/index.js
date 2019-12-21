@@ -5,9 +5,8 @@
  */
 
 import React from 'react';
-// import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet-async';
-import { FormattedMessage } from 'react-intl';
+// import { FormattedMessage } from 'react-intl';
 import { useSelector, useDispatch } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { Layout } from 'components/Layout';
@@ -35,7 +34,7 @@ import {
 } from './actions';
 import reducer from './reducer';
 import saga from './saga';
-import messages from './messages';
+// import messages from './messages';
 
 const key = 'loginPage';
 const stateSelector = createStructuredSelector({
@@ -51,18 +50,20 @@ export default function LoginPage() {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
-  const {
-    login,
-    password,
-    error,
-    isMaster,
-    isShowPassword,
-    isLoading,
-  } = useSelector(stateSelector);
+  const { login, error, isMaster, isShowPassword, isLoading } = useSelector(
+    stateSelector,
+  );
   const dispatch = useDispatch();
   const handleMaster = () => dispatch(toggleMasterAction());
   const handleLogin = e => {
-    if (!login) dispatch(enterLoginErrorAction('Your login cannot be empty'));
+    if (!login)
+      dispatch(
+        enterLoginErrorAction({
+          title: 'Your login cannot be empty',
+          description:
+            'You have not entered your login. Please enter your employee login in the Login field',
+        }),
+      );
     else dispatch(enterLoginAction());
     e.preventDefault();
   };
@@ -119,7 +120,13 @@ export default function LoginPage() {
             </form>
           </Card>
 
-          {error && <Callout intent={Intent.WARNING} title={error} />}
+          {error.title && error.description && (
+            <Callout
+              intent={Intent.WARNING}
+              title={error.title}
+              description={error.description}
+            />
+          )}
         </Wrapper>
       </Layout>
     </>

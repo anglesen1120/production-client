@@ -7,7 +7,7 @@
 import React from 'react';
 import { Button, Intent, Tooltip } from '@blueprintjs/core';
 
-import { FormattedMessage } from 'react-intl';
+// import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import {
   makeSelectIsShowPassword,
@@ -15,7 +15,7 @@ import {
 } from 'containers/LoginPage/selectors';
 import { useSelector, useDispatch } from 'react-redux';
 import { togglePasswordAction } from 'containers/LoginPage/actions';
-import messages from './messages';
+// import messages from './messages';
 
 const stateSelector = createStructuredSelector({
   isShowPassword: makeSelectIsShowPassword(),

@@ -1,5 +1,7 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { push } from 'connected-react-router';
 import { api, request } from 'utils';
+import routes from 'routes';
 import { ENTER_LOGIN } from './constants';
 import { enterLoginSuccessAction, enterLoginErrorAction } from './actions';
 import { makeSelectLogin, makeSelectPassword } from './selectors';
@@ -22,8 +24,10 @@ export function* enterLogin() {
     });
 
     yield put(enterLoginSuccessAction(token));
-  } catch (error) {
-    yield put(enterLoginErrorAction(error));
+    yield put(push(routes.worker));
+  } catch (err) {
+    const [title] = [err.message];
+    yield put(enterLoginErrorAction({ title, description: 'description' }));
   }
 }
 
