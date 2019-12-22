@@ -53,12 +53,9 @@ export function enterLoginSuccessAction(token) {
   };
 }
 
-export function enterLoginErrorAction({ title, description }) {
+export function enterLoginErrorAction(error) {
   return {
     type: ENTER_LOGIN_ERROR,
-    error: {
-      title,
-      description,
-    },
+    error,
   };
 }

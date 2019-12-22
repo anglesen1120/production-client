@@ -36,6 +36,7 @@ const makeSelectIsShowPassword = () =>
     loginState => loginState.isShowPassword,
   );
 
+export default selectLoginPageDomain;
 export {
   makeSelectLogin,
   makeSelectPassword,

@@ -15,7 +15,7 @@ import { Provider } from 'react-redux';
 import { loadState, saveState } from 'services/persist.service';
 import { throttle } from 'lodash';
 import { ConnectedRouter } from 'connected-react-router';
-import history from 'utils/history';
+import { history } from 'utils';
 import 'sanitize.css/sanitize.css';
 import '@blueprintjs/core/lib/css/blueprint.css';
 import '@blueprintjs/icons/lib/css/blueprint-icons.css';
