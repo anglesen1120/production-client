@@ -15,8 +15,13 @@ const selectWorkerPageDomain = state => state.workerPage || initialState;
  * Default selector used by WorkerPage
  */
 
-const makeSelectWorkerPage = () =>
-  createSelector(selectWorkerPageDomain, substate => substate);
+const makeSelectTask = () =>
+  createSelector(selectWorkerPageDomain, workerState => workerState.task);
 
-export default makeSelectWorkerPage;
-export { selectWorkerPageDomain };
+const makeSelectIsLoading = () =>
+  createSelector(selectWorkerPageDomain, workerState => workerState.isLoading);
+
+const makeSelectError = () =>
+  createSelector(selectWorkerPageDomain, workerState => workerState.error);
+
+export { makeSelectTask, makeSelectError, makeSelectIsLoading };

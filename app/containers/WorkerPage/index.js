@@ -4,43 +4,74 @@
  *
  */
 
-import React from 'react';
-// import PropTypes from 'prop-types';
+import React, { useEffect } from 'react';
+import {
+  Alignment,
+  Button,
+  Classes,
+  Navbar,
+  NavbarDivider,
+  NavbarGroup,
+  NavbarHeading,
+} from '@blueprintjs/core';
 import { Helmet } from 'react-helmet-async';
 import { FormattedMessage } from 'react-intl';
 import { useSelector, useDispatch } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { useInjectReducer, useInjectSaga } from 'redux-injectors';
-import makeSelectWorkerPage from './selectors';
+import {
+  makeSelectTask,
+  makeSelectIsLoading,
+  makeSelectError,
+} from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
+import { getTaskAction, updateTaskAction } from './actions';
 
 const stateSelector = createStructuredSelector({
-  workerPage: makeSelectWorkerPage(),
+  task: makeSelectTask(),
+  isLoading: makeSelectIsLoading(),
+  error: makeSelectError(),
 });
 
-function WorkerPage() {
+export default function WorkerPage() {
   useInjectReducer({ key: 'workerPage', reducer });
   useInjectSaga({ key: 'workerPage', saga });
 
-  /* eslint-disable no-unused-vars */
-  const { workerPage } = useSelector(stateSelector);
+  const { task, isLoading, error } = useSelector(stateSelector);
   const dispatch = useDispatch();
-  /* eslint-enable no-unused-vars */
+  const getTask = () => dispatch(getTaskAction());
+  const updateTask = () => dispatch(updateTaskAction());
+
+  useEffect(() => {
+    getTask();
+  }, []);
 
   return (
-    <div>
+    <>
       <Helmet>
-        <title>WorkerPage</title>
+        <title>Worker - production</title>
         <meta name="description" content="Description of WorkerPage" />
       </Helmet>
-      <FormattedMessage {...messages.header} />
-    </div>
+
+      <Navbar>
+        <NavbarGroup align={Alignment.LEFT}>
+          <NavbarHeading>Production</NavbarHeading>
+          <NavbarDivider />
+        </NavbarGroup>
+
+        <NavbarGroup align={Alignment.RIGHT}>
+          <NavbarDivider />
+          <Button
+            className={Classes.MINIMAL}
+            onClick={updateTask}
+            icon="log-out"
+            text="Logout"
+          />
+        </NavbarGroup>
+      </Navbar>
+    </>
   );
 }
-
-WorkerPage.propTypes = {};
-
-export default WorkerPage;

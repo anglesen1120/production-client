@@ -30,7 +30,6 @@ import {
   enterLoginAction,
   changeLoginAction,
   changePasswordAction,
-  enterLoginErrorAction,
 } from './actions';
 import reducer from './reducer';
 import saga from './saga';
@@ -50,23 +49,12 @@ export default function LoginPage() {
   useInjectReducer({ key, reducer });
   useInjectSaga({ key, saga });
 
-  const { login, error, isMaster, isShowPassword, isLoading } = useSelector(
+  const { error, isMaster, isShowPassword, isLoading } = useSelector(
     stateSelector,
   );
   const dispatch = useDispatch();
   const handleMaster = () => dispatch(toggleMasterAction());
-  const handleLogin = e => {
-    if (!login)
-      dispatch(
-        enterLoginErrorAction({
-          title: 'Your login cannot be empty',
-          description:
-            'You have not entered your login. Please enter your employee login in the Login field',
-        }),
-      );
-    else dispatch(enterLoginAction());
-    e.preventDefault();
-  };
+  const handleLogin = e => dispatch(enterLoginAction()) && e.preventDefault();
   const onChangeLogin = e => dispatch(changeLoginAction(e.target.value));
   const onChangePassword = e => dispatch(changePasswordAction(e.target.value));
 
@@ -108,11 +96,7 @@ export default function LoginPage() {
                     disabled={isLoading}
                   />
 
-                  <Button
-                    rightIcon="arrow-right"
-                    type="submit"
-                    disabled={isLoading}
-                  >
+                  <Button rightIcon="log-in" type="submit" disabled={isLoading}>
                     Log In
                   </Button>
                 </Wrapper>

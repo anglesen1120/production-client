@@ -9,7 +9,7 @@ import { ENTER_LOGIN_SUCCESS } from 'containers/LoginPage/constants';
 
 export const initialState = {
   token: {
-    expiresIn: '',
+    expiresIn: 0,
     accessToken: '',
   },
 };
