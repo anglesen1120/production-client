@@ -15,10 +15,14 @@ import LoginPage from 'containers/LoginPage/Loadable';
 import WorkerPage from 'containers/WorkerPage/Loadable';
 import MasterPage from 'containers/MasterPage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
-
+import { useInjectReducer } from 'redux-injectors';
+import reducer from './reducer';
 import GlobalStyle from '../../global-styles';
 
+const key = 'app';
 function App() {
+  useInjectReducer({ key, reducer });
+
   return (
     <div>
       <Switch>

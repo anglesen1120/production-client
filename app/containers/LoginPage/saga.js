@@ -1,7 +1,8 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
-import { api, request } from 'utils';
+import { api, request, roles } from 'utils';
 import routes from 'routes';
+import jwtDecode from 'jwt-decode';
 import { ENTER_LOGIN } from './constants';
 import { enterLoginSuccessAction, enterLoginErrorAction } from './actions';
 import { makeSelectLogin, makeSelectPassword } from './selectors';
@@ -11,7 +12,7 @@ export function* enterLogin() {
   const password = yield select(makeSelectPassword());
 
   try {
-    const token = yield call(request, api.login, {
+    const response = yield call(request, api.login, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -23,8 +24,24 @@ export function* enterLogin() {
       }),
     });
 
+    const {
+      token,
+      token: { accessToken },
+    } = response;
+    const { role } = jwtDecode(accessToken);
     yield put(enterLoginSuccessAction(token));
-    yield put(push(routes.worker));
+
+    switch (role) {
+      case roles.worker:
+        yield put(push(routes.worker));
+        break;
+      case roles.master:
+        yield put(push(routes.master));
+        break;
+      case roles.admin:
+        // todo: create admin page
+        break;
+    }
   } catch (err) {
     const [title] = [err.message];
     yield put(enterLoginErrorAction({ title, description: 'description' }));

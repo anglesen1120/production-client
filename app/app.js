@@ -12,6 +12,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
+import { loadState, saveState } from 'services/persist.service';
+import { throttle } from 'lodash';
 import { ConnectedRouter } from 'connected-react-router';
 import history from 'utils/history';
 import 'sanitize.css/sanitize.css';
@@ -37,9 +39,19 @@ import configureStore from './configureStore';
 import { translationMessages } from './i18n';
 
 // Create redux store with history
-const initialState = {};
+const initialState = loadState();
 const store = configureStore(initialState, history);
 const MOUNT_NODE = document.getElementById('app');
+
+// Load and Save redux store to localStorage
+store.subscribe(
+  throttle(() => {
+    saveState({
+      language: store.getState().language,
+      app: store.getState().app,
+    });
+  }, 1000),
+);
 
 const ConnectedApp = props => (
   <Provider store={store}>

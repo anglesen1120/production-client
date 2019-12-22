@@ -2,7 +2,7 @@
 import masterPageReducer from '../reducer';
 // import { someAction } from '../actions';
 
-/* eslint-disable default-case, no-param-reassign */
+/* eslint-disable no-param-reassign */
 describe('masterPageReducer', () => {
   let state;
   beforeEach(() => {

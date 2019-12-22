@@ -2,7 +2,7 @@
 import workerPageReducer from '../reducer';
 // import { someAction } from '../actions';
 
-/* eslint-disable default-case, no-param-reassign */
+/* eslint-disable no-param-reassign */
 describe('workerPageReducer', () => {
   let state;
   beforeEach(() => {

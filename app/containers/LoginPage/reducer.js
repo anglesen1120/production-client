@@ -27,7 +27,7 @@ export const initialState = {
   isShowPassword: false,
 };
 
-/* eslint-disable default-case, no-param-reassign */
+/* eslint-disable no-param-reassign */
 const loginPageReducer = produce((draft, action) => {
   switch (action.type) {
     case CHANGE_LOGIN:

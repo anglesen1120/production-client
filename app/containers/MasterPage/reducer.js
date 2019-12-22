@@ -9,7 +9,7 @@ import { DEFAULT_ACTION } from './constants';
 
 export const initialState = {};
 
-/* eslint-disable default-case, no-param-reassign */
+/* eslint-disable no-param-reassign */
 const masterPageReducer = produce((draft, action) => {
   switch (action.type) {
     case DEFAULT_ACTION:

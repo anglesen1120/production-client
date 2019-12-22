@@ -33,6 +33,7 @@ module.exports = {
     'import/no-unresolved': 2,
     'import/no-webpack-loader-syntax': 0,
     'import/prefer-default-export': 0,
+    'default-case': 0,
     indent: [
       2,
       2,

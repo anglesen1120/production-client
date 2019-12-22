@@ -13,7 +13,7 @@ export const initialState = {
   locale: DEFAULT_LOCALE,
 };
 
-/* eslint-disable default-case, no-param-reassign */
+/* eslint-disable no-param-reassign */
 const languageProviderReducer = produce((draft, action) => {
   switch (action.type) {
     case CHANGE_LOCALE:
