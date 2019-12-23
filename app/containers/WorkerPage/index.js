@@ -18,6 +18,7 @@ import { Helmet } from 'react-helmet-async';
 import { FormattedMessage } from 'react-intl';
 import { useSelector, useDispatch } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
+import { Layout } from 'components/Layout';
 
 import { useInjectReducer, useInjectSaga } from 'redux-injectors';
 import {
@@ -29,6 +30,7 @@ import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
 import { getTaskAction, updateTaskAction } from './actions';
+import Statistics from '../../components/App/Statistics';
 
 const stateSelector = createStructuredSelector({
   task: makeSelectTask(),
@@ -72,6 +74,11 @@ export default function WorkerPage() {
           />
         </NavbarGroup>
       </Navbar>
+
+      <div>
+        <div>img</div>
+        <Statistics />
+      </div>
     </>
   );
 }

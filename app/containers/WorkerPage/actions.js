@@ -11,6 +11,9 @@ import {
   UPDATE_TASK,
   UPDATE_TASK_SUCCESS,
   UPDATE_TASK_ERROR,
+  CHANGE_COUNTDOWN_TIME,
+  CHANGE_SCHEDULED_QUANTITY,
+  CHANGE_MADE_QUANTITY,
 } from './constants';
 
 export function getTaskAction() {
@@ -49,5 +52,23 @@ export function updateTaskErrorAction(error) {
   return {
     type: UPDATE_TASK_ERROR,
     error,
+  };
+}
+
+export function changeScheduledQuantityAction() {
+  return {
+    type: CHANGE_SCHEDULED_QUANTITY,
+  };
+}
+
+export function changeMadeQuantityAction() {
+  return {
+    type: CHANGE_MADE_QUANTITY,
+  };
+}
+
+export function changeCountdownTimeAction() {
+  return {
+    type: CHANGE_COUNTDOWN_TIME,
   };
 }

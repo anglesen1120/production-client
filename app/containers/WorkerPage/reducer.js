@@ -10,6 +10,8 @@ import { GET_TASK, GET_TASK_SUCCESS, GET_TASK_ERROR } from './constants';
 export const initialState = {
   isLoading: false,
   error: '',
+  scheduledQuantity: 0,
+  madeQuantity: 0,
   task: {
     name: '',
     quantityPlanned: 0,
