@@ -6,18 +6,32 @@
 
 import React, { useState, useEffect } from 'react';
 import { Hotkey, Hotkeys, HotkeysTarget } from '@blueprintjs/core';
-import { useDispatch } from 'react-redux';
-import Typography from '../Statistics/Typography.style';
+import { useDispatch, useSelector } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+import {
+  makeSelectInterval,
+  makeSelectQuantityScheduled,
+  makeSelectIsActive,
+} from 'containers/WorkerPage/selectors';
 import {
   changeCountdownTimeAction,
   changeScheduledQuantityAction,
   changeMadeQuantityAction,
-} from '../../../containers/WorkerPage/actions';
+  pauseCountdownTimeAction,
+} from 'containers/WorkerPage/actions';
+import { transformSecondsToTimeFormat } from 'services/datetime.service';
+import Typography from '../Statistics/Typography.style';
+import Item from '../Statistics/Item.style';
+
+const stateSelector = createStructuredSelector({
+  interval: makeSelectInterval(),
+  isActive: makeSelectIsActive(),
+  quantityScheduled: makeSelectQuantityScheduled(),
+});
 
 export default function CountdownTimer() {
-  const [seconds, setSeconds] = useState(4);
-  const [quantity, setQuantity] = useState(0);
-  const [isActive, setIsActive] = useState(true);
+  const { interval, isActive } = useSelector(stateSelector);
+  const [seconds, setSeconds] = useState(interval);
   const dispatch = useDispatch();
   const handleTime = () => dispatch(changeCountdownTimeAction());
   const handleScheduledQuantity = () =>
@@ -25,33 +39,25 @@ export default function CountdownTimer() {
   const handleMadeQuantity = () => dispatch(changeMadeQuantityAction());
 
   useEffect(() => {
-    let interval;
+    let countdown;
 
     if (isActive) {
-      interval = setInterval(() => {
-        handleTime();
-        setSeconds(seconds => seconds - 1);
+      countdown = setInterval(() => {
+        // handleTime();
+        setSeconds(duration => duration - 1);
       }, 1000);
       if (seconds === 0) {
         handleScheduledQuantity();
-        setSeconds(4);
-        setQuantity(quantity + 1);
+        setSeconds(interval);
       }
-    } else if (!isActive && seconds !== 0) {
-      clearInterval(interval);
     }
-    return () => clearInterval(interval);
-  }, [isActive, seconds]);
+    return () => clearInterval(countdown);
+  }, [seconds, isActive]);
 
   return (
-    <>
+    <Item>
       <Typography>Czas produkcji</Typography>
-      <div>{quantity}</div>
-      <Typography details>
-        {`${Math.floor(seconds / 60)}:${`0${Math.floor(seconds % 60)}`.slice(
-          -2,
-        )}`}
-      </Typography>
-    </>
+      <Typography details>{transformSecondsToTimeFormat(seconds)}</Typography>
+    </Item>
   );
 }

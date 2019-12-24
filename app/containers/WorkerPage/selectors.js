@@ -21,7 +21,26 @@ const makeSelectTask = () =>
 const makeSelectIsLoading = () =>
   createSelector(selectWorkerPageDomain, workerState => workerState.isLoading);
 
+const makeSelectIsActive = () =>
+  createSelector(selectWorkerPageDomain, workerState => workerState.isActive);
+
 const makeSelectError = () =>
   createSelector(selectWorkerPageDomain, workerState => workerState.error);
 
-export { makeSelectTask, makeSelectError, makeSelectIsLoading };
+const makeSelectInterval = () =>
+  createSelector(selectWorkerPageDomain, workerState => workerState.interval);
+
+const makeSelectQuantityScheduled = () =>
+  createSelector(
+    selectWorkerPageDomain,
+    workerState => workerState.quantityScheduled,
+  );
+
+export {
+  makeSelectTask,
+  makeSelectError,
+  makeSelectIsLoading,
+  makeSelectIsActive,
+  makeSelectInterval,
+  makeSelectQuantityScheduled,
+};

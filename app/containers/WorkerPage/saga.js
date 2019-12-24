@@ -27,12 +27,12 @@ export function* updateTask() {
   const { accessToken } = yield select(makeSelectToken());
 
   try {
-    yield call(request, api.task, {
+    const response = yield call(request, api.task, {
       method: 'PATCH',
       headers: { Authorization: `Bearer ${accessToken}` },
     });
 
-    yield put(updateTaskSuccessAction());
+    yield put(updateTaskSuccessAction(response));
   } catch (error) {
     yield put(updateTaskErrorAction(error));
   }

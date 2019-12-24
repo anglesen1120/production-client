@@ -14,6 +14,7 @@ import {
   CHANGE_COUNTDOWN_TIME,
   CHANGE_SCHEDULED_QUANTITY,
   CHANGE_MADE_QUANTITY,
+  PAUSE_COUNTDOWN_TIME,
 } from './constants';
 
 export function getTaskAction() {
@@ -42,9 +43,10 @@ export function updateTaskAction() {
   };
 }
 
-export function updateTaskSuccessAction() {
+export function updateTaskSuccessAction(task) {
   return {
     type: UPDATE_TASK_SUCCESS,
+    task,
   };
 }
 
@@ -70,5 +72,11 @@ export function changeMadeQuantityAction() {
 export function changeCountdownTimeAction() {
   return {
     type: CHANGE_COUNTDOWN_TIME,
+  };
+}
+
+export function pauseCountdownTimeAction() {
+  return {
+    type: PAUSE_COUNTDOWN_TIME,
   };
 }

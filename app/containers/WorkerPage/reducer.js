@@ -5,13 +5,23 @@
  */
 
 import produce from 'immer';
-import { GET_TASK, GET_TASK_SUCCESS, GET_TASK_ERROR } from './constants';
+import {
+  GET_TASK,
+  GET_TASK_SUCCESS,
+  GET_TASK_ERROR,
+  UPDATE_TASK,
+  UPDATE_TASK_SUCCESS,
+  UPDATE_TASK_ERROR,
+  CHANGE_SCHEDULED_QUANTITY,
+  PAUSE_COUNTDOWN_TIME,
+} from './constants';
 
 export const initialState = {
   isLoading: false,
+  isActive: true,
   error: '',
-  scheduledQuantity: 0,
-  madeQuantity: 0,
+  quantityScheduled: 0,
+  interval: null,
   task: {
     name: '',
     quantityPlanned: 0,
@@ -70,12 +80,26 @@ const workerPageReducer = produce((draft, action) => {
       draft.isLoading = true;
       break;
     case GET_TASK_SUCCESS:
+    case UPDATE_TASK_SUCCESS:
       draft.isLoading = false;
       draft.task = action.task;
+      draft.interval =
+        action.task.duration
+          .split(':')
+          .reverse()
+          .reduce((prev, curr, i) => prev + curr * 60 ** i, 0) /
+        action.task.quantityPlanned;
       break;
     case GET_TASK_ERROR:
+    case UPDATE_TASK_ERROR:
       draft.isLoading = false;
       draft.error = action.error;
+      break;
+    case CHANGE_SCHEDULED_QUANTITY:
+      draft.quantityScheduled += 1;
+      break;
+    case PAUSE_COUNTDOWN_TIME:
+      draft.isActive = !draft.isActive;
       break;
   }
 }, initialState);

@@ -49,6 +49,7 @@ store.subscribe(
     saveState({
       language: store.getState().language,
       app: store.getState().app,
+      workerPage: store.getState().workerPage,
     });
   }, 1000),
 );

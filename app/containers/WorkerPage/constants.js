@@ -13,6 +13,7 @@ export const UPDATE_TASK_SUCCESS = 'app/WorkerPage/UPDATE_TASK_SUCCESS';
 export const UPDATE_TASK_ERROR = 'app/WorkerPage/UPDATE_TASK_ERROR';
 
 export const CHANGE_COUNTDOWN_TIME = 'app/WorkerPage/CHANGE_COUNTDOWN_TIME';
+export const PAUSE_COUNTDOWN_TIME = 'app/WorkerPage/PAUSE_COUNTDOWN_TIME';
 
 export const CHANGE_SCHEDULED_QUANTITY =
   'app/WorkerPage/CHANGE_SCHEDULED_QUANTITY';
