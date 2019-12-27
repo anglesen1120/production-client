@@ -5,6 +5,7 @@
  */
 
 import produce from 'immer';
+import { LOGOUT_SUCCESS } from 'containers/App/constants';
 import {
   GET_TASK,
   GET_TASK_SUCCESS,
@@ -24,11 +25,11 @@ export const initialState = {
   interval: null,
   task: {
     name: '',
-    quantityPlanned: 0,
+    quantityPlanned: null,
     quantityMade: 0,
     technicalDrawing: '',
     status: false,
-    duration: '',
+    duration: null,
     createdAt: '',
     customer: {
       name: '',
@@ -92,7 +93,7 @@ const workerPageReducer = produce((draft, action) => {
       break;
     case GET_TASK_ERROR:
     case UPDATE_TASK_ERROR:
-      draft.isLoading = false;
+      draft.isLoading = true;
       draft.error = action.error;
       break;
     case CHANGE_SCHEDULED_QUANTITY:
@@ -100,6 +101,11 @@ const workerPageReducer = produce((draft, action) => {
       break;
     case PAUSE_COUNTDOWN_TIME:
       draft.isActive = !draft.isActive;
+      break;
+    case LOGOUT_SUCCESS:
+      draft.task = initialState.task;
+      draft.quantityScheduled = initialState.quantityScheduled;
+      draft.interval = initialState.interval;
       break;
   }
 }, initialState);

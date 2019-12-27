@@ -15,16 +15,19 @@ import LoginPage from 'containers/LoginPage/Loadable';
 import WorkerPage from 'containers/WorkerPage/Loadable';
 import MasterPage from 'containers/MasterPage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
-import { useInjectReducer } from 'redux-injectors';
+import { useInjectReducer, useInjectSaga } from 'redux-injectors';
+import { Layout } from 'components/App/Layout';
 import reducer from './reducer';
+import saga from './saga';
 import GlobalStyle from '../../global-styles';
 
 const key = 'app';
 function App() {
   useInjectReducer({ key, reducer });
+  useInjectSaga({ key, saga });
 
   return (
-    <div>
+    <Layout global>
       <Switch>
         <Route exact path={routes.login} component={LoginPage} />
         <Route exact path={routes.worker} component={WorkerPage} />
@@ -32,7 +35,7 @@ function App() {
         <Route component={NotFoundPage} />
       </Switch>
       <GlobalStyle />
-    </div>
+    </Layout>
   );
 }
 

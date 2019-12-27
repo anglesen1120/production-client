@@ -27,7 +27,7 @@ export default function TechnicalDrawing() {
   const { task, isLoading } = useSelector(stateSelector);
 
   return (
-    <Container>
+    <Container className={isLoading && 'bp3-skeleton'}>
       <Img
         alt="Technical Drawing"
         src={getImageUrl(task.technicalDrawing)}

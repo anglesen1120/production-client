@@ -5,19 +5,17 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { Hotkey, Hotkeys, HotkeysTarget } from '@blueprintjs/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import {
   makeSelectInterval,
-  makeSelectQuantityScheduled,
   makeSelectIsActive,
+  makeSelectTask,
 } from 'containers/WorkerPage/selectors';
 import {
   changeCountdownTimeAction,
   changeScheduledQuantityAction,
   changeMadeQuantityAction,
-  pauseCountdownTimeAction,
 } from 'containers/WorkerPage/actions';
 import { transformSecondsToTimeFormat } from 'services/datetime.service';
 import Typography from '../Statistics/Typography.style';
@@ -26,11 +24,15 @@ import Item from '../Statistics/Item.style';
 const stateSelector = createStructuredSelector({
   interval: makeSelectInterval(),
   isActive: makeSelectIsActive(),
-  quantityScheduled: makeSelectQuantityScheduled(),
+  task: makeSelectTask(),
 });
 
 export default function CountdownTimer() {
-  const { interval, isActive } = useSelector(stateSelector);
+  const {
+    interval,
+    isActive,
+    task: { status },
+  } = useSelector(stateSelector);
   const [seconds, setSeconds] = useState(interval);
   const dispatch = useDispatch();
   const handleTime = () => dispatch(changeCountdownTimeAction());
@@ -41,7 +43,7 @@ export default function CountdownTimer() {
   useEffect(() => {
     let countdown;
 
-    if (isActive) {
+    if (isActive && !status) {
       countdown = setInterval(() => {
         // handleTime();
         setSeconds(duration => duration - 1);
@@ -51,13 +53,24 @@ export default function CountdownTimer() {
         setSeconds(interval);
       }
     }
+    if (status) {
+      setSeconds(0);
+    }
     return () => clearInterval(countdown);
-  }, [seconds, isActive]);
+  }, [seconds, isActive, status]);
 
   return (
-    <Item>
-      <Typography>Czas produkcji</Typography>
-      <Typography details>{transformSecondsToTimeFormat(seconds)}</Typography>
-    </Item>
+    <>
+      {console.log(seconds)}
+      <Item>
+        <Typography>Czas produkcji</Typography>
+        <Typography details>{transformSecondsToTimeFormat(seconds)}</Typography>
+      </Item>
+
+      <Item>
+        <Typography>Całkowity czas produkcji</Typography>
+        <Typography details>{transformSecondsToTimeFormat(seconds)}</Typography>
+      </Item>
+    </>
   );
 }

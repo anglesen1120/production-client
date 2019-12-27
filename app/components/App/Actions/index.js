@@ -15,6 +15,7 @@ import {
 } from 'containers/WorkerPage/actions';
 import { makeSelectIsActive } from 'containers/WorkerPage/selectors';
 import { createStructuredSelector } from 'reselect';
+import { logoutAction } from 'containers/App/actions';
 import messages from './messages';
 import Container from './Container.style';
 import Wrapper from './Wrapper.style';
@@ -27,7 +28,8 @@ export default function Actions() {
   const dispatch = useDispatch();
   const { isActive } = useSelector(stateSelector);
   const handlePause = () => dispatch(pauseCountdownTimeAction());
-  const updateTask = () => dispatch(updateTaskAction());
+  const updateTask = () => isActive && dispatch(updateTaskAction());
+  const handleLogout = () => dispatch(logoutAction());
 
   return (
     <Container>
@@ -66,7 +68,7 @@ export default function Actions() {
       </div>
       <div>
         <Wrapper>
-          <Icon icon="log-out" iconSize={75} />
+          <Icon onClick={handleLogout} icon="log-out" iconSize={75} />
         </Wrapper>
       </div>
     </Container>

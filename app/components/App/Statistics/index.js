@@ -18,7 +18,6 @@ import {
 import { createStructuredSelector } from 'reselect';
 import { useSelector, useDispatch } from 'react-redux';
 import { format } from 'date-fns';
-import { Intent, Spinner } from '@blueprintjs/core';
 import messages from './messages';
 import Container from './Container.style';
 import Wrapper from './Wrapper.style';
@@ -37,45 +36,47 @@ export default function Statistics() {
   const { task, isLoading, quantityScheduled } = useSelector(stateSelector);
 
   return (
-    <Container>
-      {isLoading ? (
-        <Spinner intent={Intent.PRIMARY} size={55} />
-      ) : (
-        <div>
-          <Wrapper>
-            <Item>
-              <Typography>Oczekiwana ilość</Typography>
-              <Typography details>{quantityScheduled}</Typography>
-            </Item>
-
-            <Item>
-              <Typography>Aktualna ilość</Typography>
-              <Typography details>{task.quantityMade}</Typography>
-            </Item>
-          </Wrapper>
-
+    <Container className={isLoading && 'bp3-skeleton'}>
+      <Wrapper main>
+        <Wrapper>
           <Item>
-            <Typography>
-              {task.quantityMade} / {task.quantityPlanned}
-            </Typography>
+            <Typography>Oczekiwana ilość</Typography>
+            <Typography details>{quantityScheduled}</Typography>
           </Item>
 
           <Item>
-            <CountdownTimer />
+            <Typography>Aktualna ilość</Typography>
+            <Typography details>{task.quantityMade}</Typography>
           </Item>
+        </Wrapper>
 
-          <Item>
-            <div>Nazwa zadania: {task.name}</div>
-            <div>
-              Zaplanowane przez: {task.master.firstName} {task.master.lastName}
-            </div>
-            <div>Nazwa maszyny: {task.productionMachine.name}</div>
-            <div>Nazwa klienta: {task.customer.name}</div>
-            <div>Data utworzenia: {task.createdAt}</div>
-            <div>Numer zadania: {task.uuid}</div>
-          </Item>
-        </div>
-      )}
+        <Item>
+          <Typography>
+            {task.quantityMade} / {task.quantityPlanned}
+          </Typography>
+        </Item>
+
+        <Item>
+          <CountdownTimer />
+        </Item>
+
+        <Item>
+          <Typography small>Nazwa zadania: {task.name}</Typography>
+          <Typography small>
+            Nazwa maszyny: {task.productionMachine.name}
+          </Typography>
+          <Typography small>Nazwa klienta: {task.customer.name}</Typography>
+          <Typography small>
+            Data utworzenia:{' '}
+            {task.createdAt &&
+              format(new Date(task.createdAt), 'dd.MM.yyyy, HH:MM')}
+          </Typography>
+          <Typography small>
+            Zaplanowane przez: {task.master.firstName} {task.master.lastName}
+          </Typography>
+          <Typography small>Numer zadania: {task.uuid}</Typography>
+        </Item>
+      </Wrapper>
     </Container>
   );
 }
