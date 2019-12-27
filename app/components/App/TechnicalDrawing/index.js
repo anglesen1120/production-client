@@ -11,7 +11,6 @@ import {
   makeSelectIsLoading,
 } from 'containers/WorkerPage/selectors';
 import { useSelector } from 'react-redux';
-import { s3 } from 'utils';
 import { getImageUrl } from 'services/aws.service';
 import Container from './Container.style';
 import Img from './Img.style';

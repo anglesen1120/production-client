@@ -43,6 +43,26 @@ export default function Actions() {
         <Wrapper>
           <Icon onClick={updateTask} icon="key-enter" iconSize={75} />
         </Wrapper>
+
+        <Wrapper>
+          <Icon icon="image-rotate-left" iconSize={75} />
+        </Wrapper>
+
+        <Wrapper>
+          <Icon icon="image-rotate-right" iconSize={75} />
+        </Wrapper>
+
+        <Wrapper>
+          <Icon icon="zoom-in" iconSize={75} />
+        </Wrapper>
+
+        <Wrapper>
+          <Icon icon="zoom-out" iconSize={75} />
+        </Wrapper>
+
+        <Wrapper>
+          <Icon icon="zoom-to-fit" iconSize={75} />
+        </Wrapper>
       </div>
       <div>
         <Wrapper>
