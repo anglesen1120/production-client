@@ -37,46 +37,48 @@ export default function Statistics() {
 
   return (
     <Container className={isLoading && 'bp3-skeleton'}>
-      <Wrapper main>
-        <Wrapper>
+      {!isLoading && (
+        <Wrapper main>
+          <Wrapper>
+            <Item>
+              <Typography>Oczekiwana ilość</Typography>
+              <Typography details>{quantityScheduled}</Typography>
+            </Item>
+
+            <Item>
+              <Typography>Aktualna ilość</Typography>
+              <Typography details>{task.quantityMade}</Typography>
+            </Item>
+          </Wrapper>
+
           <Item>
-            <Typography>Oczekiwana ilość</Typography>
-            <Typography details>{quantityScheduled}</Typography>
+            <Typography>
+              {task.quantityMade} / {task.quantityPlanned}
+            </Typography>
           </Item>
 
           <Item>
-            <Typography>Aktualna ilość</Typography>
-            <Typography details>{task.quantityMade}</Typography>
+            <CountdownTimer />
+          </Item>
+
+          <Item>
+            <Typography small>Nazwa zadania: {task.name}</Typography>
+            <Typography small>
+              Nazwa maszyny: {task.productionMachine.name}
+            </Typography>
+            <Typography small>Nazwa klienta: {task.customer.name}</Typography>
+            <Typography small>
+              Data utworzenia:{' '}
+              {task.createdAt &&
+                format(new Date(task.createdAt), 'dd.MM.yyyy, HH:MM')}
+            </Typography>
+            <Typography small>
+              Zaplanowane przez: {task.master.firstName} {task.master.lastName}
+            </Typography>
+            <Typography small>Numer zadania: {task.uuid}</Typography>
           </Item>
         </Wrapper>
-
-        <Item>
-          <Typography>
-            {task.quantityMade} / {task.quantityPlanned}
-          </Typography>
-        </Item>
-
-        <Item>
-          <CountdownTimer />
-        </Item>
-
-        <Item>
-          <Typography small>Nazwa zadania: {task.name}</Typography>
-          <Typography small>
-            Nazwa maszyny: {task.productionMachine.name}
-          </Typography>
-          <Typography small>Nazwa klienta: {task.customer.name}</Typography>
-          <Typography small>
-            Data utworzenia:{' '}
-            {task.createdAt &&
-              format(new Date(task.createdAt), 'dd.MM.yyyy, HH:MM')}
-          </Typography>
-          <Typography small>
-            Zaplanowane przez: {task.master.firstName} {task.master.lastName}
-          </Typography>
-          <Typography small>Numer zadania: {task.uuid}</Typography>
-        </Item>
-      </Wrapper>
+      )}
     </Container>
   );
 }

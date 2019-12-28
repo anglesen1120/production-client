@@ -17,6 +17,7 @@ import {
   changeScheduledQuantityAction,
   changeMadeQuantityAction,
 } from 'containers/WorkerPage/actions';
+
 import { transformSecondsToTimeFormat } from 'services/datetime.service';
 import Typography from '../Statistics/Typography.style';
 import Item from '../Statistics/Item.style';
@@ -35,6 +36,8 @@ export default function CountdownTimer() {
   } = useSelector(stateSelector);
   const [seconds, setSeconds] = useState(interval);
   const dispatch = useDispatch();
+  // const socket = socketIOClient('http://localhost:3001/production');
+
   const handleTime = () => dispatch(changeCountdownTimeAction());
   const handleScheduledQuantity = () =>
     dispatch(changeScheduledQuantityAction());
@@ -60,17 +63,9 @@ export default function CountdownTimer() {
   }, [seconds, isActive, status]);
 
   return (
-    <>
-      {console.log(seconds)}
-      <Item>
-        <Typography>Czas produkcji</Typography>
-        <Typography details>{transformSecondsToTimeFormat(seconds)}</Typography>
-      </Item>
-
-      <Item>
-        <Typography>Całkowity czas produkcji</Typography>
-        <Typography details>{transformSecondsToTimeFormat(seconds)}</Typography>
-      </Item>
-    </>
+    <Item>
+      <Typography>Czas produkcji</Typography>
+      <Typography details>{transformSecondsToTimeFormat(seconds)}</Typography>
+    </Item>
   );
 }

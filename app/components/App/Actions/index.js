@@ -16,6 +16,7 @@ import {
 import { makeSelectIsActive } from 'containers/WorkerPage/selectors';
 import { createStructuredSelector } from 'reselect';
 import { logoutAction } from 'containers/App/actions';
+import socketIOClient from 'socket.io-client';
 import messages from './messages';
 import Container from './Container.style';
 import Wrapper from './Wrapper.style';
@@ -27,8 +28,10 @@ const stateSelector = createStructuredSelector({
 export default function Actions() {
   const dispatch = useDispatch();
   const { isActive } = useSelector(stateSelector);
+
   const handlePause = () => dispatch(pauseCountdownTimeAction());
   const updateTask = () => isActive && dispatch(updateTaskAction());
+
   const handleLogout = () => dispatch(logoutAction());
 
   return (

@@ -97,15 +97,13 @@ const workerPageReducer = produce((draft, action) => {
       draft.error = action.error;
       break;
     case CHANGE_SCHEDULED_QUANTITY:
-      draft.quantityScheduled += 1;
+      draft.task.quantityScheduled += 1;
       break;
     case PAUSE_COUNTDOWN_TIME:
       draft.isActive = !draft.isActive;
       break;
     case LOGOUT_SUCCESS:
       draft.task = initialState.task;
-      draft.quantityScheduled = initialState.quantityScheduled;
-      draft.interval = initialState.interval;
       break;
   }
 }, initialState);

@@ -1,5 +1,6 @@
 import { call, put, select, takeLatest } from 'redux-saga/effects';
 import { api, request } from 'utils';
+
 import { GET_TASK, UPDATE_TASK } from './constants';
 import { makeSelectToken } from '../App/selectors';
 import { makeSelectTask } from './selectors';

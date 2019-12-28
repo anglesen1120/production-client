@@ -26,6 +26,7 @@ import { useInjectReducer, useInjectSaga } from 'redux-injectors';
 import Actions from 'components/App/Actions';
 import Statistics from 'components/App/Statistics';
 import TechnicalDrawing from 'components/App/TechnicalDrawing';
+import socketIOClient from 'socket.io-client';
 import {
   makeSelectTask,
   makeSelectIsLoading,
